@@ -1,0 +1,14 @@
+.main{
+    height: 40vh;
+    width: 100%;
+    background-color: red;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+.head p{
+    font-size: 3vw;
+    color: antiquewhite;
+    font-weight: 700;
+}
