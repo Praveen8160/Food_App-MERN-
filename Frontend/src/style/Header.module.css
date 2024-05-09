@@ -23,11 +23,12 @@
 
 .logo {
     object-fit: contain;
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 60px;
     background-image: url("https://assets.materialup.com/uploads/61d86780-be13-47fa-81a6-226aac22db27/preview.jpg");
-    
-
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-radius: 10px
 }
 
 .nav_links {
