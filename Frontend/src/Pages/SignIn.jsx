@@ -1,23 +1,30 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, json, useNavigate } from "react-router-dom";
+
 function SignIn() {
   const [credentials, setcredentials] = useState({});
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:4000/user/SignIn", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: credentials.email,
-        password: credentials.password,
-      }),
-    });
+    const response = await fetch(
+      `http://localhost:5000/user/SignIn`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: credentials.email,
+          password: credentials.password,
+        }),
+      }
+    );
     const res = await response.json();
     console.log(res);
     if (res.success) {
-      alert("good");
+      localStorage.setItem("authtoken", res.token);
+      console.log(localStorage.getItem("authtoken"));
+      navigate("/");
     }
   };
   const onchange = (e) => {

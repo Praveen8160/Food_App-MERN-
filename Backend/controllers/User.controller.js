@@ -1,5 +1,6 @@
 const User = require("../models/User.model.js");
 const { validationResult } = require("express-validator");
+const { GenerateUserToken } = require("../service/authentication.js");
 const CreateUserHandle = async (req, res) => {
   const error = validationResult(req);
   if (!error.isEmpty()) {
@@ -27,10 +28,16 @@ const UserLoginHandler = async (req, res) => {
   if (!userdata) {
     return res.status(400).json({ error: "Provide valid credential" });
   }
-  if (userdata.password !== req.body.password) {
+  const isvalidPassword = await userdata.isPasswordCorrect(req.body.password);
+
+  if (!isvalidPassword) {
     return res.status(400).json({ error: "Provide valid credential" });
   }
-  return res.json({ success: true });
+  const token = GenerateUserToken(userdata);
+
+  // console.log(token);
+
+  return res.json({ success: true, token: token });
 };
 module.exports = {
   CreateUserHandle,
