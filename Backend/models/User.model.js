@@ -14,6 +14,11 @@ const UserSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    Role: {
+      type: String,
+      required:true,
+      default: "Customer",
+    },
     location: {
       type: String,
       required: true,
@@ -29,8 +34,7 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 
-UserSchema.methods.isPasswordCorrect=
-async function (password) {
+UserSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 

@@ -1,27 +1,22 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { React, useState } from "react";
 import axios from "axios";
-export default function SignUp() {
-  const [credentials, setcredentials] = useState({
-    Name: "",
-    email: "",
-    password: "",
-    location: "",
-    Role: "Customer",
-  });
-  const [error, seterror] = useState();
+import { Link, useNavigate } from "react-router-dom";
+
+function Add_food() {
+  const [FoodData, setFoodData] = useState({});
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/user/Signup",
+        `http://localhost:5000/user/SignIn`,
         {
-          Name: credentials.Name,
-          email: credentials.email,
-          password: credentials.password,
-          location: credentials.location,
-          Role: credentials.Role,
+          name: FoodData.name,
+          foodType: FoodData.foodType,
+          category: FoodData.category,
+          img: FoodData.img,
+          description: FoodData.description,
+          price: FoodData.price,
         },
         {
           headers: {
@@ -30,23 +25,21 @@ export default function SignUp() {
         }
       );
       const res = response.data;
-      console.log(res);
       if (res.success) {
-        console.log("done");
-        navigate("/SignIn");
+        alert("food add successfully");
+      } else {
+        alert("enter all values");
       }
     } catch (error) {
-      // console.log(error);
-      seterror(error.message);
+      console.log(error.message);
     }
   };
   const onchange = (e) => {
     const { name, value } = e.target;
-    setcredentials({ ...credentials, [name]: value });
+    setFoodData({ ...FoodData, [name]: value });
   };
   return (
     <>
-      {error !== "" && <h1>{error}</h1>}
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -66,15 +59,15 @@ export default function SignUp() {
                 htmlFor="name"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Username
+                name
               </label>
               <div className="mt-2">
                 <input
                   id="name"
-                  name="Name"
+                  name="name"
                   type="text"
                   onChange={onchange}
-                  value={credentials.Name}
+                  value={FoodData.name}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -82,96 +75,106 @@ export default function SignUp() {
             </div>
             <div>
               <label
-                htmlFor="email"
+                htmlFor="category"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Email address
+                category
               </label>
               <div className="mt-2">
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  onChange={onchange}
-                  value={credentials.email}
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Password
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  onChange={onchange}
-                  value={credentials.password}
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-            <div>
-              <label
-                htmlFor="Role"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Role
-              </label>
-              <select
-                name="Role"
-                onChange={onchange}
-                value={credentials.Role}
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              >
-                <option value="Customer">Customer</option>
-                <option value="Seller">Seller</option>
-              </select>
-            </div>
-            <div>
-              <label
-                htmlFor="Location"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Location
-              </label>
-              <div className="mt-2">
-                <input
-                  id="Location"
-                  name="location"
-                  onChange={onchange}
-                  value={credentials.location}
+                  id="category"
+                  name="category"
                   type="text"
+                  onChange={onchange}
+                  value={FoodData.category}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
-
+            <div>
+              <label
+                htmlFor="foodType"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                foodType
+              </label>
+              <div className="mt-2">
+                <input
+                  id="foodType"
+                  name="foodType"
+                  type="text"
+                  onChange={onchange}
+                  value={FoodData.foodType}
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                htmlFor="img"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                img
+              </label>
+              <div className="mt-2">
+                <input
+                  id="img"
+                  name="img"
+                  type="file"
+                  onChange={onchange}
+                  value={FoodData.img}
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                description
+              </label>
+              <div className="mt-2">
+                <input
+                  id="description"
+                  name="description"
+                  type="text"
+                  onChange={onchange}
+                  value={FoodData.description}
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                htmlFor="price"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                price
+              </label>
+              <div className="mt-2">
+                <input
+                  id="price"
+                  name="price"
+                  type="number"
+                  onChange={onchange}
+                  value={FoodData.price}
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
             <div>
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign Up
+                Add
               </button>
-              <Link
-                to={"/SignIn"}
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-4"
-              >
-                {" "}
-                I'm Already User
-              </Link>
             </div>
           </form>
         </div>
@@ -179,3 +182,5 @@ export default function SignUp() {
     </>
   );
 }
+
+export default Add_food;

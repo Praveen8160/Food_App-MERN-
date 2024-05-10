@@ -1,34 +1,36 @@
 import React, { useState } from "react";
-import { Link, json, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignIn() {
   const [credentials, setcredentials] = useState({});
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch(
-      `http://localhost:5000/user/SignIn`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: credentials.email,
-          password: credentials.password,
-        }),
-      }
-    );
+    const response = await fetch(`http://localhost:5000/user/SignIn`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: credentials.email,
+        password: credentials.password,
+      }),
+    });
     const res = await response.json();
     console.log(res);
     if (res.success) {
       localStorage.setItem("authtoken", res.token);
       console.log(localStorage.getItem("authtoken"));
-      navigate("/");
+      if (res.role == "Customer") {
+        navigate("/");
+      } else {
+        console.log("i am Seller");
+      }
     }
   };
   const onchange = (e) => {
-    setcredentials({ ...credentials, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setcredentials({ ...credentials, [name]: value });
   };
   return (
     <>

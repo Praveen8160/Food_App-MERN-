@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function Footer() {
   return (
     <>
-      <div class={style.footer}>
+      <div className={style.footer}>
         <Link className="mr-2 hover:underline" to={"/"}>Home</Link>
         <Link className="mr-2 hover:underline" to={"/SignIn"}>Sign In</Link>
         <Link className="hover:underline" to="/SignUp">Sign Up</Link>

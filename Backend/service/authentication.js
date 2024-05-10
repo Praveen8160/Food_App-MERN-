@@ -12,6 +12,17 @@ const GenerateUserToken = (user) => {
     }
   );
 };
+
+const GetUserToken = (token) => {
+  if (!token) return null;
+  try {
+    const payload = jwt.verify(token, process.env.TOKEN_SECRET);
+    return payload;
+  } catch (error) {
+    return null;
+  }
+};
 module.exports = {
   GenerateUserToken,
+  GetUserToken,
 };
