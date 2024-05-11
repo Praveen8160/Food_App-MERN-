@@ -9,8 +9,8 @@ function App() {
   return (
     <>
     <Header></Header>
-    <Outlet></Outlet>
-    {/* <Add_food></Add_food> */}
+    {/* <Outlet></Outlet> */}
+    <Add_food></Add_food>
     <Footer></Footer>
     </>
   );

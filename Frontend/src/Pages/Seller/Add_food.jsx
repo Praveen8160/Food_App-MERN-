@@ -4,39 +4,46 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Add_food() {
   const [FoodData, setFoodData] = useState({});
+  const [image, setimage] = useState();
   const navigate = useNavigate();
+
+  const onchange = (e) => {
+    const { name, value } = e.target;
+    setFoodData({ ...FoodData, [name]: value });
+  };
+
+  const handleFileChange = (event) => {
+    setimage(event.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("name", FoodData.name);
+    formData.append("foodType", FoodData.foodType);
+    formData.append("category", FoodData.category);
+    formData.append("Food_img", image);
+    formData.append("description", FoodData.description);
+    formData.append("price", FoodData.price);
     try {
       const response = await axios.post(
-        `http://localhost:5000/user/SignIn`,
-        {
-          name: FoodData.name,
-          foodType: FoodData.foodType,
-          category: FoodData.category,
-          img: FoodData.img,
-          description: FoodData.description,
-          price: FoodData.price,
-        },
+        `http://localhost:5000/Food/Add-Food`,
+        formData,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
         }
       );
       const res = response.data;
       if (res.success) {
         alert("food add successfully");
-      } else {
-        alert("enter all values");
+      } else if (res.errors) {
+        console.log(res.errors);
       }
     } catch (error) {
       console.log(error.message);
     }
-  };
-  const onchange = (e) => {
-    const { name, value } = e.target;
-    setFoodData({ ...FoodData, [name]: value });
   };
   return (
     <>
@@ -48,12 +55,7 @@ function Add_food() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form
-            className="space-y-6"
-            action="#"
-            method="POST"
-            onSubmit={handleSubmit}
-          >
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="name"
@@ -121,11 +123,11 @@ function Add_food() {
               <div className="mt-2">
                 <input
                   id="img"
-                  name="img"
                   type="file"
-                  onChange={onchange}
-                  value={FoodData.img}
-                  required
+                  name="Food_img"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  // required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>

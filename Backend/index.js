@@ -5,7 +5,9 @@ const Foodrouter = require("./router/Food.router.js");
 const MongoConnection = require("./connection.js");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const {CheckAuthenticationCookie} = require("./middlewares/authentication.middleware.js");
+const {
+  CheckAuthenticationCookie,
+} = require("./middlewares/authentication.middleware.js");
 const app = express();
 
 app.use(
@@ -15,9 +17,10 @@ app.use(
   })
 );
 app.use(cookieParser());
-app.use(CheckAuthenticationCookie);
-app.use(express.json());
+app.use(express.json()); //for accept json data
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static("public"));
+app.use(CheckAuthenticationCookie);
 MongoConnection(process.env.MONGO_DB);
 
 app.use("/user", Userrouter);
