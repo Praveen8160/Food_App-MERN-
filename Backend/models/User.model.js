@@ -16,10 +16,14 @@ const UserSchema = mongoose.Schema(
     },
     Role: {
       type: String,
-      required:true,
+      required: true,
       default: "Customer",
     },
     location: {
+      type: String,
+      required: true,
+    },
+    Mobile: {
       type: String,
       required: true,
     },

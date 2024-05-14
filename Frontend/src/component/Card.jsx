@@ -1,22 +1,17 @@
 import React from "react";
 
-function Card() {
+function Card(props) {
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg mb-28">
-      <img
-        className="w-full"
-        src="https://via.placeholder.com/300"
-        alt="Placeholder"
-      />
+      <img className="w-full" src={props.Food.Image} alt={props.Food.Image} style={{height:"280px",objectFit:"cover"}} />
       <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">Card title</div>
+        <div className="font-bold text-xl">{props.Food.name}</div>
         <p className="text-gray-700 text-base">
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
+         {props.Food.description}
         </p>
       </div>
       <div className="px-6 py-4">
-        <select className="m-2 w-16 rounded border-none">
+        <select className="w-full bg-blue-100 h-7 mb-3 rounded border-none">
           {Array.from(Array(6), (e, i) => {
             return (
               <option key={i + 1} value={i + 1}>
@@ -25,16 +20,17 @@ function Card() {
             );
           })}
         </select>
-        <select className="m-2 w-16 rounded">
+        <h1 className="mb-3">Total Price:3838</h1>
+        {/* <select className="m-2 w-16 rounded">
           <option value="half">Half</option>
           <option value="Full">Full</option>
-        </select>
-        <a
+        </select> */}
+        <button
           href="#"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           Go somewhere
-        </a>
+        </button>
       </div>
     </div>
   );

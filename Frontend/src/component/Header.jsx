@@ -1,35 +1,54 @@
 import React from "react";
 import style from "../style/Header.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 function Header() {
+  const navigate = useNavigate();
+  const logouthandler = () => {
+    localStorage.removeItem("authtoken");
+    navigate("/SignIn");
+  };
   return (
-    <>
-      <nav className={style.navbar}>
-        <div className={style.container}>
-          <img
-            href="https://assets.materialup.com/uploads/61d86780-be13-47fa-81a6-226aac22db27/preview.jpg"
-            className={style.logo}
-          />
-          <ul className={style.nav_links}>
-            <li>
+    <nav className={style.navbar}>
+      <div className={style.container}>
+        <img
+          src="https://tse3.mm.bing.net/th?id=OIP.yEF7JTCS1sTJEphGsADZTQHaHa&pid=Api&P=0&h=180"
+          alt="logo"
+          className={style.logo}
+        />
+        <ul className={style.nav_links}>
+          <li>
+            <Link to={"/"} className={style.nav_link}>
+              Home
+            </Link>
+            {localStorage.getItem("authtoken") && (
               <Link to={"/"} className={style.nav_link}>
-                Home
+                Add Cart
               </Link>
-            </li>
-            <li>
-              <Link to="/SignIn" className={style.nav_link}>
-                Login
-              </Link>
-            </li>
-            <li>
-              <Link to={"SignUp"} className={style.nav_link}>
-                Sign Up
-              </Link>
-            </li>
-          </ul>
+            )}
+          </li>
+        </ul>
+      </div>
+      {!localStorage.getItem("authtoken") ? (
+        <div>
+          <Link to="/SignIn" className={style.nav_link}>
+            Login
+          </Link>
+          <Link to={"/SignUp"} className={style.nav_link}>
+            Sign Up
+          </Link>
         </div>
-      </nav>
-    </>
+      ) : (
+        <div>
+          <Link to="/" className={style.nav_link}>
+            My Cart
+          </Link>
+          <button className={style.nav_link} onClick={logouthandler}>
+            Logout
+          </button>
+        </div>
+      )}
+    </nav>
   );
 }
 

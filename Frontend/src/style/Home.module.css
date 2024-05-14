@@ -1,3 +1,4 @@
+
 .main{
     height: 40vh;
     width: 100%;
@@ -11,4 +12,15 @@
     font-size: 3vw;
     color: antiquewhite;
     font-weight: 700;
+}
+.search{
+    width: 50%;
+    height: 10%;
+    background-color: aliceblue;
+    border-radius: 10px;
+}
+.search input{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
 }

@@ -11,6 +11,7 @@ router.post(
   body("Name", "Enter your username").trim().notEmpty(),
   body("email", "Enter valid email").notEmpty().isEmail(),
   body("password", "password length should be 6 or more").isLength({ min: 6 }),
+  body("OTP", "OTP is invalid").isLength({ min: 4 }),
   CreateUserHandle
 );
 router.post(
