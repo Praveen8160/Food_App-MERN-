@@ -31,13 +31,20 @@
   
   .nav_link {
     margin-right: 15px; /* Adjust spacing between links */
-    color: white; /* Add your desired text color */
+    color: rgb(240, 236, 236); /* Add your desired text color */
     text-decoration: none;
     margin-left: 50px;
     font-weight: 700;
     font-size: 20px;
   }
-  
+  .nav_btn {
+   
+    color: rgb(41, 40, 40); /* Add your desired text color */
+    text-decoration: none;
+    /* margin-left: 50px; */
+    font-weight: 700;
+    font-size: 20px;
+  }
   .nav_link:last-child {
     margin-right: 0; /* Remove margin for the last link */
   }

@@ -16,7 +16,7 @@ const CreateUserHandle = async (req, res) => {
     // console.log(number);
     const data = await otp.findOne({ otp: OTP, phoneNumber: number });
     // console.log(data);
-     console.log(number);
+    console.log(number);
     if (data) {
       const userdata = await User.create({
         Name,
@@ -55,10 +55,14 @@ const UserLoginHandler = async (req, res) => {
     httpOnly: true,
     secure: true,
   };
-  // console.log(token);
+  console.log(token);
   return res
     .cookie("token", token, options)
-    .json({ success: true, role: userdata.Role, token: token });
+    .json({
+      success: true,
+      user: { role: userdata.Role, email: userdata.email },
+      token: token,
+    });
 };
 module.exports = {
   CreateUserHandle,

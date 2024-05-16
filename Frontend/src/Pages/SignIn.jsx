@@ -20,7 +20,7 @@ function SignIn() {
     console.log(res);
     if (res.success) {
       localStorage.setItem("authtoken", res.token);
-      console.log(localStorage.getItem("authtoken"));
+      localStorage.setItem("email", res.user.email);
       if (res.role == "Customer") {
         navigate("/");
       } else {

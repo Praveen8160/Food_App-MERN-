@@ -14,11 +14,13 @@ const GenerateUserToken = (user) => {
 };
 
 const GetUserToken = (token) => {
+  console.log(token);
   if (!token) return null;
   try {
     const payload = jwt.verify(token, process.env.TOKEN_SECRET);
     return payload;
   } catch (error) {
+    console.log(error);
     return null;
   }
 };

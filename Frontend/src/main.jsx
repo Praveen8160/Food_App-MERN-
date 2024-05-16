@@ -11,12 +11,14 @@ import {
 import Home from "./component/Home.jsx";
 import SignIn from "./Pages/SignIn.jsx";
 import SignUp from "./Pages/SignUp.jsx";
+import Cart from "./Pages/Customer/Cart.jsx";
 const rout = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App></App>}>
       <Route path="/" element={<Home></Home>}></Route>
       <Route path="/SignIn" element={<SignIn></SignIn>}></Route>
       <Route path="/SignUp" element={<SignUp></SignUp>}></Route>
+      <Route path="/Cart" element={<Cart></Cart>}></Route>
     </Route>
   )
 );

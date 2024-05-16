@@ -37,32 +37,40 @@ function Home() {
         </div>
       </div>
       <div className="container mx-auto">
-        {categoryData != []
-          ? categoryData.map((data) => {
-              return (
-                <>
-                  <div className="my-8">
-                    <div key={data._id} className="font-bold text-lg mb-2">
-                      {data.categoryName}
-                    </div>
-                    <div className="grid grid-cols-4 gap-4">
-                      {FoodData != []
-                        ? FoodData.filter(
-                            (item) =>
-                              item.category === data.categoryName &&
-                              item.name
-                                .toLowerCase()
-                                .includes(search.toLowerCase())
-                          ).map((filteritem) => {
-                            return <Card key={filteritem._id} Food={filteritem}></Card>;
-                          })
-                        : <div><p>no</p></div>}
-                    </div>
+        {categoryData != [] ? (
+          categoryData.map((data) => {
+            return (
+              <>
+                <div className="my-8">
+                  <div key={data._id} className="font-bold text-lg mb-2">
+                    {data.categoryName}
                   </div>
-                </>
-              );
-            })
-          : <div><p>no</p></div>}
+                  <div className="grid grid-cols-4 gap-4">
+                    {FoodData != [] ? (
+                      FoodData.filter(
+                        (item) =>
+                          item.category === data.categoryName &&
+                          item.name.toLowerCase().includes(search.toLowerCase())
+                      ).map((filteritem) => {
+                        return (
+                          <Card key={filteritem._id} Food={filteritem}></Card>
+                        );
+                      })
+                    ) : (
+                      <div>
+                        <p>no</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </>
+            );
+          })
+        ) : (
+          <div>
+            <p>no</p>
+          </div>
+        )}
       </div>
     </>
   );
