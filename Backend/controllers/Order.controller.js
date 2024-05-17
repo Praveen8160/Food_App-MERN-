@@ -1,3 +1,4 @@
+const { json } = require("express");
 const Order = require("../models/Order.model.js");
 const handelordercheckout = async (req, res) => {
   let data = req.body.orderData;
@@ -26,7 +27,17 @@ const handelordercheckout = async (req, res) => {
   }
   return res.json({ success: true });
 };
-
+const handleMyorder = async (req, res) => {
+  try {
+    const email = req.body.email;
+    const userorder = await Order.findOne({ email });
+    return res.json({ success: true, order: userorder.Orders });
+  } catch (error) {
+    console.log(error.message);
+    return res.json({ error });
+  }
+};
 module.exports = {
   handelordercheckout,
+  handleMyorder,
 };

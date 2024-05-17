@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { cartcount } from "../Context/CartProvider";
 function Card(props) {
+  const { count, setcount } = useContext(cartcount);
   const [value, setvalue] = useState([]);
   const [qty, setqty] = useState(1);
   const handlecart = async () => {
@@ -21,7 +23,8 @@ function Card(props) {
       };
       setvalue([...value, newvalues]);
       localStorage.setItem("cart", JSON.stringify([...value, newvalues]));
-      console.log(value);
+      setcount(count + 1);
+      // console.log(value);
     } else {
       console.log("update");
       const newcart = value.map((val) => {

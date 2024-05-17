@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import style from "../style/Header.module.css";
 import { Link, useNavigate } from "react-router-dom";
+import { cartcount } from "../Context/CartProvider";
 
 function Header() {
-  const [count, setcount] = useState(0);
+  const { count } = useContext(cartcount);
   const navigate = useNavigate();
   const logouthandler = () => {
     localStorage.removeItem("authtoken");
     navigate("/SignIn");
   };
-  useEffect(() => {
-    if (JSON.parse(localStorage.getItem("cart"))) {
-      const cart = JSON.parse(localStorage.getItem("cart")).length;
-      setcount(cart);
-    } else {
-      setcount(0);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (JSON.parse(localStorage.getItem("cart"))) {
+  //     const cart = JSON.parse(localStorage.getItem("cart")).length;
+  //     setcount(cart);
+  //   } else {
+  //     setcount(0);
+  //   }
+  // }, []);
   return (
     <nav className={style.navbar}>
       <div className={style.container}>
@@ -31,8 +32,8 @@ function Header() {
               Home
             </Link>
             {localStorage.getItem("authtoken") && (
-              <Link to={"/"} className={style.nav_link}>
-                Add Cart
+              <Link to={"/Myorder"} className={style.nav_link}>
+                My Order
               </Link>
             )}
           </li>

@@ -1,21 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import axios from "axios";
+import { cartcount } from "../../Context/CartProvider";
 function Cart() {
   let email = localStorage.getItem("email");
+  const { count, setcount } = useContext(cartcount);
   const [cart, setcart] = useState([]);
-  // if (!cart && cart.length == 0) {
-  //   return (
-  //     <div className="flex flex-col items-center justify-center">
-  //       <h1 className="text-3xl mt-20 p-10 font-bold">Cart is empty!</h1>
-  //     </div>
-  //   );
-  // }
   const handledelete = (index) => {
     const newcart = [...cart];
     newcart.splice(index, 1);
     localStorage.setItem("cart", JSON.stringify(newcart));
     setcart(newcart);
+    setcount(count - 1);
   };
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart"));
@@ -46,6 +42,7 @@ function Cart() {
       if (res.success) {
         localStorage.removeItem("cart");
         setcart([]);
+        setcount(0);
       }
       console.log(res);
     } catch (error) {

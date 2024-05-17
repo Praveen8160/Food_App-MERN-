@@ -45,6 +45,7 @@ function Home() {
                   <div key={data._id} className="font-bold text-lg mb-2">
                     {data.categoryName}
                   </div>
+                  <hr></hr>
                   <div className="grid grid-cols-4 gap-4">
                     {FoodData != [] ? (
                       FoodData.filter(

@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { handelordercheckout } = require("../controllers/Order.controller.js");
 const {
-  CheckAuthenticationCookie,
-} = require("../middlewares/authentication.middleware.js");
+  handelordercheckout,
+  handleMyorder,
+} = require("../controllers/Order.controller.js");
 
 router.post("/checkout", handelordercheckout);
+router.post("/myorder", handleMyorder);
 module.exports = router;
