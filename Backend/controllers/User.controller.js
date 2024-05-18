@@ -11,9 +11,6 @@ const CreateUserHandle = async (req, res) => {
     const { Name, email, location, Mobile, password, OTP, Role } =
       await req.body;
     const number = "+91 " + Mobile;
-    // console.log(req.body);
-    // console.log(OTP);
-    // console.log(number);
     const data = await otp.findOne({ otp: OTP, phoneNumber: number });
     // console.log(data);
     console.log(number);
@@ -43,26 +40,30 @@ const UserLoginHandler = async (req, res) => {
   const email = req.body.email;
   const userdata = await User.findOne({ email });
   if (!userdata) {
-    return res.status(400).json({ errors: "Provide valid credential" });
+    return res.json({ errors: "Provide valid credential" });
   }
   const isvalidPassword = await userdata.isPasswordCorrect(req.body.password);
 
   if (!isvalidPassword) {
-    return res.status(400).json({ errors: "Provide valid credential" });
+    return res.json({ errors: "Provide valid credential" });
   }
-  const token = GenerateUserToken(userdata);
-  const options = {
+  const authtoken = GenerateUserToken(userdata);
+  // const options = {
+  //   httpOnly: true,
+  //   secure: true,
+  //   sameSite: "None",
+  //   path: "/",
+  // };
+  res.cookie("token", authtoken, {
     httpOnly: true,
     secure: true,
-  };
-  console.log(token);
-  return res
-    .cookie("token", token, options)
-    .json({
-      success: true,
-      user: { role: userdata.Role, email: userdata.email },
-      token: token,
-    });
+    sameSite: "None",
+  });
+  return res.json({
+    success: true,
+    user: { role: userdata.Role, email: userdata.email },
+    token: authtoken,
+  });
 };
 module.exports = {
   CreateUserHandle,

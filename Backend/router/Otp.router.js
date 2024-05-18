@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const twilio = require("twilio");
 const OTP = require("../models/OTP.model.js");
+const User = require("../models/User.model.js");
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -11,7 +12,11 @@ const generateRandomOpt = () => {
   return Math.floor(10000 + Math.random() * 900000).toString();
 };
 router.post("/sendotp", async (req, res) => {
-  const { to } = req.body;
+  const { to, email } = req.body;
+  const existuser = await User.findOne({ email });
+  if (existuser) {
+    return res.json({ success: false, errors: "User Already Register" });
+  }
   const number = "+91 " + to;
   if (!to) return res.json({ errors: "enter your mobile number" });
   const otp = generateRandomOpt();

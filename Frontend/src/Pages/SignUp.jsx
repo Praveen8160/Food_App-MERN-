@@ -12,7 +12,6 @@ export default function SignUp() {
     Role: "Customer",
   });
   const [error, seterror] = useState();
-  const [count, setcount] = useState("");
   const [otp, setotp] = useState(30);
   const [loading, setloading] = useState(false);
   const navigate = useNavigate();
@@ -26,6 +25,7 @@ export default function SignUp() {
         "http://localhost:5000/api/otp/sendotp",
         {
           to: credentials.Mobile,
+          email: credentials.email,
         },
         {
           headers: {
@@ -35,20 +35,22 @@ export default function SignUp() {
       );
       const response = res.data;
       // console.log(response);
-      if (response.success) {
+      if (response.success == true) {
         const otptimeout = setInterval(otptimer, 1000);
         setTimeout(() => {
           clearInterval(otptimeout);
           setloading(false);
           setotp(30);
         }, 30000);
-        seterror(response.message);
+        alert(response.message);
       } else {
         seterror(response.errors);
         setloading(false);
       }
     } catch (error) {
-      console.log(error);
+      if (res.data.error) {
+        seterror(res.data.errors);
+      }
       setloading(false);
     }
   };
@@ -94,7 +96,10 @@ export default function SignUp() {
   return (
     <>
       {!error ? (
-        <div className="min-h-full flex flex-col items-center justify-center px-6 py-12 lg:px-8 text-white" style={{  }}>
+        <div
+          className="min-h-full flex flex-col items-center justify-center px-6 py-12 lg:px-8 text-white"
+          style={{}}
+        >
           <div
             className="max-w-md w-4/5 border-solid border-2 p-10 rounded-3xl "
             style={{ backgroundColor: "#333" }}
@@ -118,7 +123,6 @@ export default function SignUp() {
                   <label
                     htmlFor="name"
                     className="block text-sm font-medium leading-6 text-white"
-                    
                   >
                     Username
                   </label>
@@ -158,7 +162,7 @@ export default function SignUp() {
                   <div className="flex items-center justify-between">
                     <label
                       htmlFor="password"
-                      className="block text-sm font-medium leading-6 text-gray-900 text-white"
+                      className="block text-sm font-medium leading-6 text-gray-900"
                     >
                       Password
                     </label>
@@ -179,7 +183,7 @@ export default function SignUp() {
                   <div className="flex items-center justify-between">
                     <label
                       htmlFor="Mobile"
-                      className="block text-sm font-medium leading-6 text-gray-900 text-white"
+                      className="block text-sm font-medium leading-6 text-gray-900"
                     >
                       Mobile
                     </label>
@@ -189,6 +193,7 @@ export default function SignUp() {
                       id="Mobile"
                       name="Mobile"
                       type="text"
+                      disabled={loading}
                       onChange={onchange}
                       value={credentials.Mobile}
                       required
@@ -199,7 +204,7 @@ export default function SignUp() {
                 <div>
                   <label
                     htmlFor="Role"
-                    className="block text-sm font-medium leading-6 text-gray-900 text-white"
+                    className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Role
                   </label>
@@ -301,7 +306,6 @@ export default function SignUp() {
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
-
                     >
                       <path
                         strokeLinecap="round"
@@ -325,7 +329,7 @@ export default function SignUp() {
                 <button
                   type="button"
                   className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
-                  onClick={()=>seterror("")}
+                  onClick={() => seterror("")}
                 >
                   OK
                 </button>

@@ -15,7 +15,7 @@ const GenerateUserToken = (user) => {
 
 const GetUserToken = (token) => {
   console.log(token);
-  if (!token) return null;
+  if (!token) return console.log("no token");
   try {
     const payload = jwt.verify(token, process.env.TOKEN_SECRET);
     return payload;

@@ -1,22 +1,30 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+// axios.defaults.withCredentials = true;
 function Myorder() {
   const [order, setorder] = useState([]);
   const getAllOrder = async () => {
     const email = localStorage.getItem("email");
-    const res = await axios.post(
-      "http://localhost:5000/Order/myorder",
-      {
-        email,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/Order/myorder",
+        {
+          email,
         },
+        { withCredentials: true },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const response = res.data;
+      if (response.success == true) {
+        setorder(response.order.reverse());
+      } else {
+        alert(response.message);
       }
-    );
-    const response = res.data;
-    setorder(response.order.reverse());
+    } catch (error) {}
   };
   useEffect(() => {
     getAllOrder();

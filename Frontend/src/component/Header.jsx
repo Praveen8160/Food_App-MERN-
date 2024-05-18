@@ -8,16 +8,9 @@ function Header() {
   const navigate = useNavigate();
   const logouthandler = () => {
     localStorage.removeItem("authtoken");
+    localStorage.removeItem("email");
     navigate("/SignIn");
   };
-  // useEffect(() => {
-  //   if (JSON.parse(localStorage.getItem("cart"))) {
-  //     const cart = JSON.parse(localStorage.getItem("cart")).length;
-  //     setcount(cart);
-  //   } else {
-  //     setcount(0);
-  //   }
-  // }, []);
   return (
     <nav className={style.navbar}>
       <div className={style.container}>
@@ -41,10 +34,12 @@ function Header() {
       </div>
       {!localStorage.getItem("authtoken") ? (
         <div>
-          <Link to="/SignIn" className={style.nav_btn}>
-            Login
-          </Link>
-          <button>
+          <button className="bg-white rounded-md align-middle p-2 mr-10 hover:bg-slate-400">
+            <Link to="/SignIn" className={style.nav_btn}>
+              Login{" "}
+            </Link>
+          </button>
+          <button className="bg-white rounded-md align-middle p-2 hover:bg-slate-400">
             <Link to={"/SignUp"} className={style.nav_btn}>
               Sign Up
             </Link>
@@ -52,14 +47,14 @@ function Header() {
         </div>
       ) : (
         <div>
-          <button className="bg-white rounded-md align-middle p-2 mr-10">
+          <button className="bg-white rounded-md align-middle p-2 mr-10 hover:bg-slate-400">
             <Link to="/Cart" className={style.nav_btn}>
               My Cart{" "}
               <span className=" bg-red-400 rounded-full m-2 p-2">{count}</span>
             </Link>
           </button>
           <button
-            className="bg-white rounded-md align-middle p-2"
+            className="bg-white rounded-md align-middle p-2 hover:bg-slate-400"
             onClick={logouthandler}
           >
             <Link to="/" className={style.nav_btn}>
