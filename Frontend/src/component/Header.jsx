@@ -24,11 +24,11 @@ function Header() {
             <Link to={"/"} className={style.nav_link}>
               Home
             </Link>
-            {localStorage.getItem("authtoken") && (
-              <Link to={"/Myorder"} className={style.nav_link}>
-                My Order
-              </Link>
-            )}
+            {/* {localStorage.getItem("authtoken") && ( */}
+            <Link to={"/Myorder"} className={style.nav_link}>
+              My Order
+            </Link>
+            {/* )} */}
           </li>
         </ul>
       </div>

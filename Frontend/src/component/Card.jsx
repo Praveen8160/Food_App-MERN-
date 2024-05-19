@@ -8,7 +8,6 @@ function Card(props) {
     let food = [];
     for (const item of value) {
       if (item.id === props.Food._id) {
-        console.log("hyy");
         food = item;
         break;
       }
@@ -24,7 +23,6 @@ function Card(props) {
       setvalue([...value, newvalues]);
       localStorage.setItem("cart", JSON.stringify([...value, newvalues]));
       setcount(count + 1);
-      // console.log(value);
     } else {
       console.log("update");
       const newcart = value.map((val) => {

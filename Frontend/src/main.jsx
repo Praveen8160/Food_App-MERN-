@@ -20,12 +20,12 @@ const rout = createBrowserRouter(
       <Route path="/" element={<Home></Home>}></Route>
       <Route path="/SignIn" element={<SignIn></SignIn>}></Route>
       <Route path="/SignUp" element={<SignUp></SignUp>}></Route>
-      {/* <Route path="/Cart" element={<Cart></Cart>}></Route>
+      <Route path="/Cart" element={<ProtectedRoute component={Cart} />}></Route>
       <Route
         path="/Myorder"
         element={<ProtectedRoute component={Myorder} />}
-      ></Route> */}
-      <Route path="/Myorder" element={<Myorder></Myorder>}></Route>
+      ></Route>
+      {/* <Route path="/Myorder" element={<Myorder></Myorder>}></Route> */}
     </Route>
   )
 );

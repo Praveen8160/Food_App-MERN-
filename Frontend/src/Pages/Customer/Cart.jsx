@@ -2,8 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import axios from "axios";
 import { cartcount } from "../../Context/CartProvider";
+import { useNavigate } from "react-router";
+
 function Cart() {
   let email = localStorage.getItem("email");
+  const navigate = useNavigate();
   const { count, setcount } = useContext(cartcount);
   const [cart, setcart] = useState([]);
   const handledelete = (index) => {
@@ -25,12 +28,13 @@ function Cart() {
   const handlecheckout = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:5000/Order/checkout",
+      const {
+        data: { key },
+      } = await axios.get("http://localhost:5000/Order/rozarpatKey");
+      const paymentresponse = await axios.post(
+        "http://localhost:5000/Order/payment",
         {
-          orderData: cart,
-          email: email,
-          orderDate: new Date().toDateString(),
+          amount: totalprice,
         },
         {
           headers: {
@@ -38,15 +42,61 @@ function Cart() {
           },
         }
       );
-      const res = response.data;
-      if (res.success) {
-        localStorage.removeItem("cart");
-        setcart([]);
-        setcount(0);
-      }
-      console.log(res);
+      const res = paymentresponse.data;
+      console.log("res1", res);
+      var options = {
+        key, // Enter the Key ID generated from the Dashboard
+        amount: res.order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        currency: "INR",
+        name: "Food Delivery",
+        description: "Total payment",
+        image: "https://example.com/your_logo",
+        order_id: res.order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        callback_url: "http://localhost:5000/Order/paymentverify",
+        prefill: {
+          name: "Gaurav Kumar",
+          email: "gaurav.kumar@example.com",
+          contact: "9000090000",
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+        handler: async function (response) {
+          // Product details to be sent along with the verification request
+          const productDetails = {
+            orderData: cart,
+            email: email,
+            orderDate: new Date().toDateString(),
+          };
+          try {
+            // Send the response and product details to your backend for verification
+            const re = await axios.post(
+              "http://localhost:5000/Order/checkout",
+              {
+                ...response,
+                ...productDetails,
+              }
+            );
+            const respo = re.data;
+            if (respo.success) {
+              localStorage.removeItem("cart");
+              setcart([]);
+              setcount(0);
+              navigate("/Myorder");
+            }
+          } catch (error) {
+            console.log("error");
+            console.log("Payment verification error", error);
+          }
+        },
+      };
+      var rzp = new window.Razorpay(options);
+      rzp.open();
     } catch (error) {
-      console.log(error.message);
+      console.log("error", error);
     }
   };
 
