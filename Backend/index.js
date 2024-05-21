@@ -27,11 +27,13 @@ const Foodrouter = require("./router/Food.router.js");
 const GetFoodrouter = require("./router/GetFoodData.router.js");
 const optRouter = require("./router/Otp.router.js");
 const Orderrouter = require("./router/Order.router.js");
+const Authenticaterouter = require("./router/Authenication.router.js");
 app.use("/user", Userrouter);
 app.use("/Food", Foodrouter);
 app.use("/api/Food", GetFoodrouter);
 app.use("/api/otp", optRouter);
 app.use("/Order", Orderrouter);
+app.use("/Authentication", Authenticaterouter);
 
 app.listen(process.env.PORT || 8000, () =>
   console.log(`server are running on http://localhost:${process.env.PORT}`)

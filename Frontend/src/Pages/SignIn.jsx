@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "../Context/AuthProvider";
 function SignIn() {
   const [credentials, setcredentials] = useState({});
+  const { login } = useContext(AuthContext);
   const [error, seterror] = useState();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -23,11 +25,12 @@ function SignIn() {
     const res = response.data;
     console.log(res);
     if (res.success) {
-      localStorage.setItem("authtoken", res.token);
       localStorage.setItem("email", res.user.email);
       if (res.role == "Customer") {
+        login();
         navigate("/");
       } else {
+        login();
         console.log("i am Seller");
       }
     } else {

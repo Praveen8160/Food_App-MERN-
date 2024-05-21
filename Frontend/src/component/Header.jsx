@@ -2,14 +2,19 @@ import React, { useContext, useEffect, useState } from "react";
 import style from "../style/Header.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { cartcount } from "../Context/CartProvider";
+import { AuthContext } from "../Context/AuthProvider";
 
 function Header() {
   const { count } = useContext(cartcount);
+  const { isAuthenticated, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  const logouthandler = () => {
-    localStorage.removeItem("authtoken");
-    localStorage.removeItem("email");
-    navigate("/SignIn");
+  const logouthandler = async () => {
+    try {
+      await logout();
+      navigate("/SignIn");
+    } catch (error) {
+      console.error("Error logging out", error);
+    }
   };
   return (
     <nav className={style.navbar}>
@@ -24,15 +29,15 @@ function Header() {
             <Link to={"/"} className={style.nav_link}>
               Home
             </Link>
-            {/* {localStorage.getItem("authtoken") && ( */}
-            <Link to={"/Myorder"} className={style.nav_link}>
-              My Order
-            </Link>
-            {/* )} */}
+            {isAuthenticated && (
+              <Link to={"/Myorder"} className={style.nav_link}>
+                My Order
+              </Link>
+            )}
           </li>
         </ul>
       </div>
-      {!localStorage.getItem("authtoken") ? (
+      {!isAuthenticated ? (
         <div>
           <button className="bg-white rounded-md align-middle p-2 mr-10 hover:bg-slate-400">
             <Link to="/SignIn" className={style.nav_btn}>

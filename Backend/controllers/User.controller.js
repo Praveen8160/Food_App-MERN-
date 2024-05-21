@@ -62,7 +62,6 @@ const UserLoginHandler = async (req, res) => {
   return res.json({
     success: true,
     user: { role: userdata.Role, email: userdata.email },
-    token: authtoken,
   });
 };
 module.exports = {

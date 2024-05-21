@@ -1,31 +1,20 @@
-import React, { useEffect, useState } from "react";
-// import { Route, Redirect } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import axios from "axios";
+import { AuthContext } from "../Context/AuthProvider";
 
 const ProtectedRoute = ({ component: Component }) => {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const { isAuthenticated, checkAuth } = useContext(AuthContext);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        await axios.get("http://localhost:5000/Order/checkAuth", {
-          withCredentials: true,
-        });
-        setIsAuthenticated(true);
-      } catch (error) {
-        setIsAuthenticated(false);
+    const verifyAuth = async () => {
+      await checkAuth();
+      if (isAuthenticated === false) {
+        navigate("/SignIn");
       }
     };
-    checkAuth();
-  }, []);
-
-  useEffect(() => {
-    if (isAuthenticated === false) {
-      navigate("/SignIn");
-    }
-  }, [isAuthenticated, navigate]);
+    verifyAuth();
+  }, [isAuthenticated, navigate, checkAuth]);
 
   if (isAuthenticated === null) return <div>Loading...</div>;
   return isAuthenticated ? <Component /> : null;

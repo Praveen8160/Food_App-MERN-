@@ -8,9 +8,7 @@ function Myorder() {
     try {
       const res = await axios.post(
         "http://localhost:5000/Order/myorder",
-        {
-          email,
-        },
+        {},
         { withCredentials: true },
         {
           headers: {
