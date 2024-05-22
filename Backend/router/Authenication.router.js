@@ -1,12 +1,18 @@
 const express = require("express");
 const router = express.Router();
-
+const { GetUserToken } = require("../service/authentication.js");
 router.get("/Auth", (req, res) => {
-  const auth = req.cookies.token;
-  if (auth) {
-    res.json({ isAuthenticated: true });
-  } else {
-    res.json({ isAuthenticated: false });
+  try {
+    const auth = req.cookies.token;
+    if (auth) {
+      const UserPayload = GetUserToken(auth);
+      const Role = UserPayload.role;
+      res.json({ isAuthenticated: true, Role: Role });
+    } else {
+      res.json({ isAuthenticated: false });
+    }
+  } catch (error) {
+    return res.json({ error: error });
   }
 });
 

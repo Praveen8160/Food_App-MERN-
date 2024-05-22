@@ -4,7 +4,7 @@ import axios from "axios";
 import { AuthContext } from "../Context/AuthProvider";
 function SignIn() {
   const [credentials, setcredentials] = useState({});
-  const { login } = useContext(AuthContext);
+  const { login, SetRole, Role } = useContext(AuthContext);
   const [error, seterror] = useState();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -23,15 +23,16 @@ function SignIn() {
       }
     );
     const res = response.data;
-    console.log(res);
+    console.log(res.user.role)
     if (res.success) {
-      localStorage.setItem("email", res.user.email);
-      if (res.role == "Customer") {
+      if (res.user.role == "Customer") {
         login();
+        SetRole("Customer");
         navigate("/");
       } else {
         login();
-        console.log("i am Seller");
+        SetRole("Seller");
+        navigate("/Add_food");
       }
     } else {
       seterror(res.errors);

@@ -5,6 +5,7 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [Role, SetRole] = useState(null);
 
   const checkAuth = async () => {
     try {
@@ -14,6 +15,7 @@ const AuthProvider = ({ children }) => {
           withCredentials: true,
         }
       );
+      SetRole(response.data.Role);
       setIsAuthenticated(response.data.isAuthenticated);
     } catch (error) {
       console.error("Error checking authentication", error);
@@ -38,7 +40,9 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, checkAuth }}>
+    <AuthContext.Provider
+      value={{ Role, SetRole, isAuthenticated, login, logout, checkAuth }}
+    >
       {children}
     </AuthContext.Provider>
   );

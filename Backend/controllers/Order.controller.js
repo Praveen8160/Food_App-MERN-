@@ -30,17 +30,13 @@ const handelordercheckout = async (req, res) => {
 const handleMyorder = async (req, res) => {
   const token = req.cookies.token;
   if (!token) {
-    // console.log(token);
     return res.json({
       success: false,
       message: "Access denied. No token provided.",
     });
   }
   try {
-    // console.log(req.user);
-    // const decode = GetUserToken(token);
-    // console.log(decode);
-    const email = req.body.email;
+    const email = req.user.email;
     const userorder = await Order.findOne({ email });
     return res.json({ success: true, order: userorder.Orders });
   } catch (error) {

@@ -6,7 +6,7 @@ import { AuthContext } from "../Context/AuthProvider";
 
 function Header() {
   const { count } = useContext(cartcount);
-  const { isAuthenticated, logout } = useContext(AuthContext);
+  const { isAuthenticated, logout, Role } = useContext(AuthContext);
   const navigate = useNavigate();
   const logouthandler = async () => {
     try {
@@ -26,12 +26,21 @@ function Header() {
         />
         <ul className={style.nav_links}>
           <li>
-            <Link to={"/"} className={style.nav_link}>
-              Home
-            </Link>
-            {isAuthenticated && (
-              <Link to={"/Myorder"} className={style.nav_link}>
-                My Order
+            {Role !== "Seller" && (
+              <Link to={"/"} className={style.nav_link}>
+                Home
+              </Link>
+            )}
+            {isAuthenticated && Role === "Customer" && (
+              <>
+                <Link to={"/Myorder"} className={style.nav_link}>
+                  My Order
+                </Link>
+              </>
+            )}
+            {isAuthenticated && Role === "Seller" && (
+              <Link to={"/Add_food"} className={style.nav_link}>
+                Add Food
               </Link>
             )}
           </li>
@@ -52,12 +61,16 @@ function Header() {
         </div>
       ) : (
         <div>
-          <button className="bg-white rounded-md align-middle p-2 mr-10 hover:bg-slate-400">
-            <Link to="/Cart" className={style.nav_btn}>
-              My Cart{" "}
-              <span className=" bg-red-400 rounded-full m-2 p-2">{count}</span>
-            </Link>
-          </button>
+          {Role === "Customer" && (
+            <button className="bg-white rounded-md align-middle p-2 mr-10 hover:bg-slate-400">
+              <Link to="/Cart" className={style.nav_btn}>
+                My Cart{" "}
+                <span className=" bg-red-400 rounded-full m-2 p-2">
+                  {count}
+                </span>
+              </Link>
+            </button>
+          )}
           <button
             className="bg-white rounded-md align-middle p-2 hover:bg-slate-400"
             onClick={logouthandler}

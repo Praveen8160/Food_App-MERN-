@@ -11,7 +11,7 @@ const instance = require("../utils/Razorpay.js");
 const crypto = require("crypto");
 
 router.post("/checkout", handelordercheckout);
-router.post("/myorder", CheckAuthenticationCookie, handleMyorder);
+router.get("/myorder", handleMyorder);
 router.get("/checkAuth", CheckAuthenticationCookie, (req, res) => {
   res.sendStatus(200);
 });

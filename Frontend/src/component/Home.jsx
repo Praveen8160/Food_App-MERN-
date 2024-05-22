@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import style from "../style/Home.module.css";
 import Card from "./Card";
 import axios from "axios";
+import { AuthContext } from "../Context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 function Home() {
   const [FoodData, setFoodData] = useState([]);
   const [categoryData, setcategoryData] = useState([]);
   const [search, setsearch] = useState("");
+  const navigate = useNavigate();
+  const { Role } = useContext(AuthContext);
   const GetAllFoodData = async () => {
     const response = await axios.get("http://localhost:5000/api/Food/Allfood", {
       headers: {
@@ -16,7 +20,12 @@ function Home() {
     setcategoryData(response.data.categoryData);
   };
   useEffect(() => {
-    GetAllFoodData();
+    if (Role === null || Role === "Customer" || Role === undefined) {
+      console.log(Role);
+      GetAllFoodData();
+    } else {
+      navigate("/SignIn");
+    }
   }, []);
   return (
     <>
