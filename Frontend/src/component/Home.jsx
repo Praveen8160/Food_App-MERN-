@@ -21,7 +21,6 @@ function Home() {
   };
   useEffect(() => {
     if (Role === null || Role === "Customer" || Role === undefined) {
-      console.log(Role);
       GetAllFoodData();
     } else {
       navigate("/SignIn");

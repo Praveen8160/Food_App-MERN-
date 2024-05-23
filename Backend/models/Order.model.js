@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
 const OrderSchema = mongoose.Schema({
-  email: {
-    type: String,
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
-    unique: true,
+    ref: "User",
   },
   Orders: {
     type: Array,

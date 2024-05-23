@@ -5,7 +5,6 @@ import { cartcount } from "../../Context/CartProvider";
 import { useNavigate } from "react-router";
 
 function Cart() {
-  let email = localStorage.getItem("email");
   const navigate = useNavigate();
   const { count, setcount } = useContext(cartcount);
   const [cart, setcart] = useState([]);
@@ -68,7 +67,6 @@ function Cart() {
           // Product details to be sent along with the verification request
           const productDetails = {
             orderData: cart,
-            email: email,
             orderDate: new Date().toDateString(),
           };
           try {
@@ -78,7 +76,7 @@ function Cart() {
               {
                 ...response,
                 ...productDetails,
-              }
+              },{ withCredentials: true },
             );
             const respo = re.data;
             if (respo.success) {

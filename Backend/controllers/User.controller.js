@@ -64,7 +64,40 @@ const UserLoginHandler = async (req, res) => {
     user: { role: userdata.Role, email: userdata.email },
   });
 };
+const getUserData = async (req, res) => {
+  try {
+    const userid = req.user._id;
+    const user = await User.findOne({ _id: userid }).select("-password");
+    return res.json({ success: true, user });
+  } catch (error) {
+    return res.json({ error: error });
+  }
+};
+const updateUser = async (req, res) => {
+  try {
+    const newUserData = req.body.User;
+    const oldUserData = req.user;
+    console.log(oldUserData.email);
+    const newUser = await User.updateOne(
+      { _id: oldUserData._id },
+      {
+        $set: {
+          Name: newUserData.Name,
+          email: newUserData.email,
+          location: newUserData.Location,
+        },
+      }
+    );
+    console.log(newUser);
+
+    return res.json({ success: true });
+  } catch (error) {
+    return res.json({ error: error });
+  }
+};
 module.exports = {
   CreateUserHandle,
   UserLoginHandler,
+  getUserData,
+  updateUser,
 };

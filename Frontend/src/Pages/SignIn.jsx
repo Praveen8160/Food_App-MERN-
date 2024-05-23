@@ -23,7 +23,6 @@ function SignIn() {
       }
     );
     const res = response.data;
-    console.log(res.user.role)
     if (res.success) {
       if (res.user.role == "Customer") {
         login();

@@ -3,17 +3,24 @@ import style from "../style/Header.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { cartcount } from "../Context/CartProvider";
 import { AuthContext } from "../Context/AuthProvider";
+import axios from "axios";
 
 function Header() {
   const { count } = useContext(cartcount);
   const { isAuthenticated, logout, Role } = useContext(AuthContext);
   const navigate = useNavigate();
-  const logouthandler = async () => {
-    try {
-      await logout();
-      navigate("/SignIn");
-    } catch (error) {
-      console.error("Error logging out", error);
+  const handleselect = async (event) => {
+    const value = event.target.value;
+    if (value === "Logout") {
+      try {
+        await logout();
+        navigate("/SignIn");
+      } catch (error) {
+        console.error("Error logging out", error);
+      }
+    } else if (value === "Profile") {
+      navigate("/Profile");
+      event.target.value = "";
     }
   };
   return (
@@ -71,14 +78,21 @@ function Header() {
               </Link>
             </button>
           )}
-          <button
-            className="bg-white rounded-md align-middle p-2 hover:bg-slate-400"
-            onClick={logouthandler}
+          <select
+            className="bg-white rounded-md align-middle p-3 border-none font-bold text-xl text-black hover:bg-slate-400"
+            onChange={handleselect}
+            defaultValue=""
           >
-            <Link to="/" className={style.nav_btn}>
+            <option value="" disabled>
+              Account
+            </option>
+            <option name="" id="" value="Logout">
               Logout
-            </Link>
-          </button>
+            </option>
+            <option name="" id="" value="Profile">
+              Profile
+            </option>
+          </select>
         </div>
       )}
     </nav>

@@ -2,6 +2,8 @@ const express = require("express");
 const {
   CreateUserHandle,
   UserLoginHandler,
+  getUserData,
+  updateUser
 } = require("../controllers/User.controller");
 const { body } = require("express-validator");
 const router = express.Router();
@@ -20,4 +22,6 @@ router.post(
   body("password", "password length should be 6 or more").isLength({ min: 6 }),
   UserLoginHandler
 );
+router.get("/getUser", getUserData);
+router.post("/updateUser", updateUser);
 module.exports = router;

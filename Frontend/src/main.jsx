@@ -15,6 +15,7 @@ import Cart from "./Pages/Customer/Cart.jsx";
 import Myorder from "./Pages/Customer/Myorder.jsx";
 import ProtectedRoute from "./component/ProtectedRoute.jsx";
 import Add_food from "./Pages/Seller/Add_food.jsx";
+import Profile from "./Pages/Profile.jsx";
 const rout = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App></App>}>
@@ -23,16 +24,22 @@ const rout = createBrowserRouter(
       <Route path="/SignUp" element={<SignUp></SignUp>}></Route>
       <Route
         path="/Cart"
-        element={<ProtectedRoute component={Cart} role="Customer" />}
+        element={<ProtectedRoute component={Cart} role={["Customer"]} />}
       ></Route>
       <Route
         path="/Myorder"
-        element={<ProtectedRoute component={Myorder} role="Customer" />}
+        element={<ProtectedRoute component={Myorder} role={["Customer"]} />}
       ></Route>
       {/* <Route path="/Myorder" element={<Myorder></Myorder>}></Route> */}
       <Route
         path="/Add_food"
-        element={<ProtectedRoute component={Add_food} role="Seller" />}
+        element={<ProtectedRoute component={Add_food} role={["Seller"]} />}
+      ></Route>
+      <Route
+        path="/Profile"
+        element={
+          <ProtectedRoute component={Profile} role={["Seller", "Customer"]} />
+        }
       ></Route>
     </Route>
   )

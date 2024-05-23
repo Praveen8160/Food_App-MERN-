@@ -8,7 +8,9 @@ function App() {
     <CartProvider>
       <AuthProvider>
         <Header></Header>
-        <Outlet></Outlet>
+        <div className="">
+          <Outlet></Outlet>
+        </div>
         <Footer></Footer>
       </AuthProvider>
     </CartProvider>

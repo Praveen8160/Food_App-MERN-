@@ -11,7 +11,7 @@ const ProtectedRoute = ({ component: Component, role: requiredRole }) => {
       await checkAuth();
       if (
         isAuthenticated === false ||
-        (requiredRole && Role !== requiredRole)
+        (requiredRole && !requiredRole.includes(Role))
       ) {
         navigate("/SignIn");
       }

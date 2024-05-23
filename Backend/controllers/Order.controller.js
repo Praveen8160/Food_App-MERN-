@@ -3,11 +3,11 @@ const { GetUserToken } = require("../service/authentication.js");
 const handelordercheckout = async (req, res) => {
   let data = req.body.orderData;
   await data.splice(0, 0, { orderDate: req.body.orderDate });
-  let id = await Order.findOne({ email: req.body.email });
+  let id = await Order.findOne({ userId: req.user._id });
   if (id === null) {
     try {
       await Order.create({
-        email: req.body.email,
+        userId: req.user._id,
         Orders: [data],
       });
       return res.json({ success: true });
@@ -17,7 +17,7 @@ const handelordercheckout = async (req, res) => {
   } else {
     try {
       await Order.findOneAndUpdate(
-        { email: req.body.email },
+        { userId: req.user._id },
         { $push: { Orders: data } }
       );
       return res.json({ success: true });
@@ -36,8 +36,8 @@ const handleMyorder = async (req, res) => {
     });
   }
   try {
-    const email = req.user.email;
-    const userorder = await Order.findOne({ email });
+    const userId = req.user._id;
+    const userorder = await Order.findOne({ userId });
     return res.json({ success: true, order: userorder.Orders });
   } catch (error) {
     console.log(error.message);

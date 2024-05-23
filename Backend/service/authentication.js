@@ -6,6 +6,8 @@ const GenerateUserToken = (user) => {
       Name: user.Name,
       email: user.email,
       role: user.Role,
+      Mobile: user.Mobile,
+      Location: user.location,
     },
     process.env.TOKEN_SECRET,
     {

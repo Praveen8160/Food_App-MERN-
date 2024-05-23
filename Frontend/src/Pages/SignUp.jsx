@@ -162,7 +162,7 @@ export default function SignUp() {
                   <div className="flex items-center justify-between">
                     <label
                       htmlFor="password"
-                      className="block text-sm font-medium leading-6 text-gray-900"
+                      className="block text-sm font-medium leading-6 text-white"
                     >
                       Password
                     </label>
@@ -183,7 +183,7 @@ export default function SignUp() {
                   <div className="flex items-center justify-between">
                     <label
                       htmlFor="Mobile"
-                      className="block text-sm font-medium leading-6 text-gray-900"
+                      className="block text-sm font-medium leading-6 text-white"
                     >
                       Mobile
                     </label>
@@ -204,7 +204,7 @@ export default function SignUp() {
                 <div>
                   <label
                     htmlFor="Role"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className="block text-sm font-medium leading-6 text-white"
                   >
                     Role
                   </label>
