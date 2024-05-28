@@ -16,6 +16,8 @@ import Myorder from "./Pages/Customer/Myorder.jsx";
 import ProtectedRoute from "./component/ProtectedRoute.jsx";
 import Add_food from "./Pages/Seller/Add_food.jsx";
 import Profile from "./Pages/Profile.jsx";
+import Dashboard from "./Pages/Seller/Dashboard.jsx";
+import View_Order from "./Pages/Seller/View_Order.jsx";
 const rout = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App></App>}>
@@ -40,6 +42,14 @@ const rout = createBrowserRouter(
         element={
           <ProtectedRoute component={Profile} role={["Seller", "Customer"]} />
         }
+      ></Route>
+       <Route
+        path="/Dashboard"
+        element={<ProtectedRoute component={Dashboard} role={["Seller"]} />}
+      ></Route>
+       <Route
+        path="/View_Order"
+        element={<ProtectedRoute component={View_Order} role={["Seller"]} />}
       ></Route>
     </Route>
   )

@@ -12,6 +12,8 @@ router.post(
       if (!req.file) {
         throw new Error("Image is required");
       }
+      console.log("object");
+      console.log(req.user);
       return true;
     }),
     body("name", "Food name is required").trim().notEmpty(),

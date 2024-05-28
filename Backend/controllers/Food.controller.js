@@ -2,9 +2,11 @@ const Food = require("../models/Food.model.js");
 const { validationResult } = require("express-validator");
 const UploadOnCloudinary = require("../utils/cloudinary.js");
 const AddFoodHandler = async (req, res) => {
+  const oldUserData = req.user;
+  const id = oldUserData._id;
   const error = validationResult(req);
   if (!error.isEmpty()) {
-    return res.status(400).json({ errors: error.array() });
+    return res.json({ errors: error.array() });
   }
   try {
     const { name, category, foodType, description, price } = req.body;
@@ -19,14 +21,14 @@ const AddFoodHandler = async (req, res) => {
       category,
       foodType,
       Image: Image.url,
-      seller: "1234",
+      seller: id,
       description,
       price,
     });
     console.log(Fooddata);
     res.json({ success: true });
   } catch (error) {
-    throw Error(error);
+   console.log(error);
   }
 };
 

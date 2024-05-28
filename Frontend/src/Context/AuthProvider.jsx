@@ -37,6 +37,7 @@ const AuthProvider = ({ children }) => {
       { withCredentials: true }
     );
     setIsAuthenticated(false);
+    SetRole(null);
   };
 
   return (

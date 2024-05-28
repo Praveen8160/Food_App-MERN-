@@ -6,16 +6,16 @@ const ProtectedRoute = ({ component: Component, role: requiredRole }) => {
   const navigate = useNavigate();
   const { isAuthenticated, checkAuth, Role } = useContext(AuthContext);
 
+  const verifyAuth = async () => {
+    await checkAuth();
+    if (
+      isAuthenticated === false ||
+      (requiredRole && !requiredRole.includes(Role))
+    ) {
+      navigate("/SignIn");
+    }
+  };
   useEffect(() => {
-    const verifyAuth = async () => {
-      await checkAuth();
-      if (
-        isAuthenticated === false ||
-        (requiredRole && !requiredRole.includes(Role))
-      ) {
-        navigate("/SignIn");
-      }
-    };
     verifyAuth();
   }, [isAuthenticated, requiredRole, Role, navigate, checkAuth]);
 

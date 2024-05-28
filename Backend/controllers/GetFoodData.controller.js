@@ -3,7 +3,6 @@ const Category = require("../models/cateogry.model.js");
 
 const GetAllDataFoodHandler = async (req, res) => {
   try {
-    // console.log(token);
     const FoodData = await Food.find({});
     const categoryData = await Category.find({});
     return res.json({ FoodData, categoryData });

@@ -4,6 +4,7 @@ import Card from "./Card";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 function Home() {
   const [FoodData, setFoodData] = useState([]);
   const [categoryData, setcategoryData] = useState([]);
@@ -20,12 +21,16 @@ function Home() {
     setcategoryData(response.data.categoryData);
   };
   useEffect(() => {
-    if (Role === null || Role === "Customer" || Role === undefined) {
+    if (Role === "Seller") {
+      navigate("/SignIn");
+    } else if (Role === null || Role === "Customer" || Role === undefined) {
+      const token = Cookies.get("token");
+      console.log("Token:", token);
       GetAllFoodData();
     } else {
       navigate("/SignIn");
     }
-  }, []);
+  }, [Role]);
   return (
     <>
       <div className={style.main}>
@@ -49,12 +54,12 @@ function Home() {
           categoryData.map((data) => {
             return (
               <>
-                <div className="my-8">
-                  <div key={data._id} className="font-bold text-lg mb-2">
+                <div className="my-8 text-lg">
+                  <div key={data._id} className="font-bold text-2xl mb-2">
                     {data.categoryName}
                   </div>
                   <hr></hr>
-                  <div className="grid grid-cols-4 gap-4">
+                  <div className="grid grid-cols-4 gap-4 mt-7">
                     {FoodData != [] ? (
                       FoodData.filter(
                         (item) =>

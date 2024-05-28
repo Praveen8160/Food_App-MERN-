@@ -3,7 +3,7 @@ const {
   CreateUserHandle,
   UserLoginHandler,
   getUserData,
-  updateUser
+  updateUser,
 } = require("../controllers/User.controller");
 const { body } = require("express-validator");
 const router = express.Router();

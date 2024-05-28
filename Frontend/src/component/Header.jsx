@@ -3,7 +3,6 @@ import style from "../style/Header.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { cartcount } from "../Context/CartProvider";
 import { AuthContext } from "../Context/AuthProvider";
-import axios from "axios";
 
 function Header() {
   const { count } = useContext(cartcount);
@@ -18,8 +17,8 @@ function Header() {
       } catch (error) {
         console.error("Error logging out", error);
       }
-    } else if (value === "Profile") {
-      navigate("/Profile");
+    } else {
+      navigate(`/${value}`);
       event.target.value = "";
     }
   };
@@ -46,9 +45,23 @@ function Header() {
               </>
             )}
             {isAuthenticated && Role === "Seller" && (
-              <Link to={"/Add_food"} className={style.nav_link}>
-                Add Food
-              </Link>
+              <>
+                <Link to={"/Dashboard"} className={style.nav_link}>
+                  Dashboard
+                </Link>
+
+                <select
+                  className={`bg-transparent font-bold text-xl ml-4 text-white outline-none ${style.custom_select}`}
+                  onChange={handleselect}
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    More
+                  </option>
+                  <option value="Add_food" className="text-black">Add Food</option>
+                  <option value="View_Order" className="text-black">View Order</option>
+                </select>
+              </>
             )}
           </li>
         </ul>
@@ -79,7 +92,7 @@ function Header() {
             </button>
           )}
           <select
-            className="bg-white rounded-md align-middle p-3 border-none font-bold text-xl text-black hover:bg-slate-400"
+            className="bg-white rounded-md align-middle p-3 border-none font-bold text-xl text-black"
             onChange={handleselect}
             defaultValue=""
           >

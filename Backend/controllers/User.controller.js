@@ -1,5 +1,6 @@
 const User = require("../models/User.model.js");
 const { validationResult } = require("express-validator");
+const validator = require("validator");
 const { GenerateUserToken } = require("../service/authentication.js");
 const otp = require("../models/OTP.model.js");
 const CreateUserHandle = async (req, res) => {
@@ -12,8 +13,6 @@ const CreateUserHandle = async (req, res) => {
       await req.body;
     const number = "+91 " + Mobile;
     const data = await otp.findOne({ otp: OTP, phoneNumber: number });
-    // console.log(data);
-    console.log(number);
     if (data) {
       const userdata = await User.create({
         Name,
@@ -59,6 +58,7 @@ const UserLoginHandler = async (req, res) => {
     secure: true,
     sameSite: "None",
   });
+  res.cookie("email", "huuhuhu");
   return res.json({
     success: true,
     user: { role: userdata.Role, email: userdata.email },
@@ -74,6 +74,15 @@ const getUserData = async (req, res) => {
   }
 };
 const updateUser = async (req, res) => {
+  if (!validator.isEmail(req.body.User.email)) {
+    return res.json({ error: "Enter valid email" });
+  }
+  if (validator.isEmpty(validator.trim(req.body.User.Name))) {
+    return res.json({ error: "Name is required" });
+  }
+  if (validator.isEmpty(validator.trim(req.body.User.location))) {
+    return res.json({ error: "Location is required" });
+  }
   try {
     const newUserData = req.body.User;
     const oldUserData = req.user;
@@ -84,12 +93,10 @@ const updateUser = async (req, res) => {
         $set: {
           Name: newUserData.Name,
           email: newUserData.email,
-          location: newUserData.Location,
+          location: newUserData.location,
         },
       }
     );
-    console.log(newUser);
-
     return res.json({ success: true });
   } catch (error) {
     return res.json({ error: error });
