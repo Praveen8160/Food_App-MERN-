@@ -27,10 +27,10 @@ function Myorder() {
     getAllOrder();
   }, []);
   return (
-    <div className="flex flex-col justify-center items-center  w-full h-full bg-slate-600">
+    <div className="flex flex-col items-center min-h-screen bg-red-200">
       {order == 0 ? (
         <div className="flex flex-col items-center justify-center">
-          <h1 className="text-3xl mt-20 p-10 font-bold">Cart is empty!</h1>
+          <h1 className="text-3xl mt-20 p-10 font-bold">Order your Food</h1>
         </div>
       ) : (
         order.reverse().map((allorder) =>
@@ -44,25 +44,25 @@ function Myorder() {
               );
             } else {
               return (
-                <table className="rounded-2xl table-auto p-5 mt-5 border-separate border-spacing-2 bg-neutral-700 border text-white border-slate-500 ">
+                <table className="rounded-2xl table-auto p-5 mt-5 border-separate border-spacing-2 bg-red-300 border text-white border-slate-500 ">
                   <thead>
                     <tr>
-                      <th className="border text-2xl p-3 border-slate-600">
+                      <th className="border text-2xl rounded-md p-2 border-slate-600">
                         Name
                       </th>
-                      <th className="border text-2xl p-3  border-slate-600">
+                      <th className="border text-2xl rounded-md p-2 border-slate-600">
                         Quantity
                       </th>
-                      <th className="border text-2xl p-3 border-slate-600">
+                      <th className="border text-2xl rounded-md p-2 border-slate-600">
                         Price
                       </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr className="text-center">
-                      <td className="border border-slate-700">{item.name}</td>
-                      <td className="border border-slate-700">{item.qty}</td>
-                      <td className="border border-slate-700">{item.Price}</td>
+                      <td className="border rounded-md p-2 border-slate-700">{item.name}</td>
+                      <td className="border rounded-md p-2 border-slate-700">{item.qty}</td>
+                      <td className="border rounded-md p-2 border-slate-700">{item.Price}</td>
                     </tr>
                   </tbody>
                 </table>

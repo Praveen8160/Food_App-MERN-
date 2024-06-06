@@ -7,11 +7,13 @@ function App() {
   return (
     <CartProvider>
       <AuthProvider>
-        <Header></Header>
-        <div className="">
-          <Outlet></Outlet>
+        <div className="overflow-hidden">
+          <Header></Header>
+          <div className="">
+            <Outlet></Outlet>
+          </div>
+          <Footer></Footer>
         </div>
-        <Footer></Footer>
       </AuthProvider>
     </CartProvider>
   );

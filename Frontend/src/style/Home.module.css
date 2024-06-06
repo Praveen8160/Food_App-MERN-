@@ -1,8 +1,11 @@
 
 .main{
-    height: 40vh;
+    height: 50vh;
     width: 100%;
-    background-color: red;
+    background-image: url("http://www.wicklowpartnership.ie/wp-content/uploads/2013/06/Healthy-Foods.jpeg");
+    background-position: center;
+    background-size: 100% auto; /* Adjusts width to 100% and height automatically */
+    background-repeat: no-repeat;
     display: flex;
     justify-content: space-around;
     align-items: center;

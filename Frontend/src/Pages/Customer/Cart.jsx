@@ -99,39 +99,39 @@ function Cart() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col min-h-screen bg-red-200 items-center">
       {cart.length === 0 ? (
         <div className="flex flex-col items-center justify-center">
           <h1 className="text-3xl mt-20 p-10 font-bold">Cart is empty!</h1>
         </div>
       ) : (
         <>
-          <table className="rounded-2xl table-auto h-full w-4/6 mt-10 mb-32 border-separate border-spacing-2 bg-neutral-700 border text-white border-slate-500">
+          <table className="w-full max-w-6xl mt-10 mb-32 border-separate border-spacing-2 bg-red-300 border rounded-xl text-white border-slate-500">
             <thead>
               <tr>
-                <th className="border text-2xl border-slate-600">ID</th>
-                <th className="border text-2xl border-slate-600">Name</th>
-                <th className="border text-2xl border-slate-600">Quantity</th>
-                <th className="border text-2xl border-slate-600">Price</th>
-                <th className="border text-2xl border-slate-600">
+                <th className="border text-2xl rounded-md p-2 border-slate-600">ID</th>
+                <th className="border text-2xl rounded-md p-2 border-slate-600">Name</th>
+                <th className="border text-2xl rounded-md p-2 border-slate-600">Quantity</th>
+                <th className="border text-2xl rounded-md p-2 border-slate-600">Price</th>
+                <th className="border text-2xl rounded-md p-2 border-slate-600">
                   Total Price
                 </th>
-                <th className="border text-2xl border-slate-600">Delete</th>
+                <th className="border text-2xl rounded-md p-2 border-slate-600">Delete</th>
               </tr>
             </thead>
             <tbody>
               {cart.map((val, index) => (
                 <tr key={index} className="text-center">
-                  <td className="border border-slate-700">{index + 1}</td>
-                  <td className="border border-slate-700">
+                  <td className="border rounded-md p-2 border-slate-700">{index + 1}</td>
+                  <td className="border rounded-md p-2 border-slate-700">
                     {val.name.toUpperCase()}
                   </td>
-                  <td className="border border-slate-700">{val.qty}</td>
-                  <td className="border border-slate-700">
+                  <td className="border rounded-md p-2 border-slate-700">{val.qty}</td>
+                  <td className="border rounded-md p-2 border-slate-700">
                     {val.Price / val.qty}
                   </td>
-                  <td className="border border-slate-700">{val.Price}</td>
-                  <td className="border border-slate-700">
+                  <td className="border rounded-md p-2 border-slate-700">{val.Price}</td>
+                  <td className="border rounded-md p-2 border-slate-700 cursor-pointer">
                     <MdDelete onClick={() => handledelete(index)} />
                   </td>
                 </tr>
@@ -147,6 +147,7 @@ function Cart() {
             Checkout
           </button>
         </>
+
       )}
     </div>
   );

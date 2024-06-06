@@ -48,7 +48,7 @@ function Card(props) {
   }, []);
 
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg mb-28">
+    <div className="max-w-sm rounded-t-full overflow-hidden bg-red-300 shadow-2xl shadow-red-400 mb-28">
       <img
         className="w-full"
         src={props.Food.Image}
@@ -79,7 +79,7 @@ function Card(props) {
         </select> */}
         <button
           href="#"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
           onClick={handlecart}
         >
           Go somewhere

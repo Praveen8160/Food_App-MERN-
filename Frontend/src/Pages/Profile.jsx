@@ -47,10 +47,10 @@ function Profile() {
   return (
     <>
       {!error ? (
-        <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+        <div className="min-h-screen bg-red-200 py-6 flex flex-col justify-center sm:py-12">
           <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-            <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-            <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+            <div className="absolute inset-0 bg-gradient-to-r from-red-400 to-red-300 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+            <div className="relative px-4 py-10 bg-red-200 shadow-lg sm:rounded-3xl sm:p-20">
               <div className="max-w-md mx-auto">
                 <div>
                   <h1 className="text-2xl font-semibold">Profile</h1>
@@ -71,7 +71,7 @@ function Profile() {
                         value={User.Name}
                         onChange={onchange}
                         readOnly={!update}
-                        className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                        className="w-full bg-white border border-gray-300 focus:border-red-400 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out rounded-2xl"
                       />
                     </div>
                     <div className="relative">
@@ -88,7 +88,7 @@ function Profile() {
                         value={User.email}
                         onChange={onchange}
                         readOnly={!update}
-                        className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                        className="w-full bg-white rounded-2xl border border-gray-300 focus:border-red-400 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                       />
                     </div>
                     <div className="relative">
@@ -105,7 +105,7 @@ function Profile() {
                         value={User.location}
                         onChange={onchange}
                         readOnly={!update}
-                        className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                        className="w-full bg-white rounded-2xl border border-gray-300 focus:border-red-400 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                       />
                     </div>
                     <div className="relative">
@@ -122,13 +122,13 @@ function Profile() {
                         value={User.Mobile}
                         onChange={onchange}
                         readOnly
-                        className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                        className="w-full bg-white rounded-2xl border border-gray-300 focus:border-red-400 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                       />
                     </div>
                   </div>
                   <div className="pt-4 flex items-center space-x-4">
                     <button
-                      className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none"
+                      className="bg-red-400 hover:bg-red-300 flex justify-center items-center w-full text-black text-xl font-bold px-4 py-3 rounded-md focus:outline-none"
                       onClick={updateuser}
                     >
                       {update ? "Save" : "Update"}

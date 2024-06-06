@@ -9,7 +9,6 @@ function CheckAuthenticationCookie(token) {
     try {
       const UserPayload = GetUserToken(tokancookie);
       req.user = UserPayload;
-      console.log(UserPayload);
       return next();
     } catch (error) {
       return res.sendStatus(403);

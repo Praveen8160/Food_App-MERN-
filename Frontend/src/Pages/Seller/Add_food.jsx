@@ -1,16 +1,19 @@
 import { React, useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 function Add_food() {
+  const { id } = useParams();
   const [FoodData, setFoodData] = useState({
     name: "",
     foodType: "",
-    category: "",
+    category: "Fast Food",
     Food_img: "",
     description: "",
     price: "",
   });
+  const [Updatefood, setUpdatefood] = useState(false);
   const [foodcategory, setFoodCategory] = useState([]);
   const [image, setimage] = useState();
   const [errors, seterrors] = useState([]);
@@ -31,9 +34,33 @@ function Add_food() {
       alert(error.message);
     }
   };
+
   useEffect(() => {
-    getFoodCategory();
-  }, []);
+    const fetchData = async () => {
+      await getFoodCategory();
+      if (id) {
+        try {
+          const response = await axios.get(
+            `http://localhost:5000/api/Food/Singlefood/${id}`
+          );
+          const fooddata = response.data.fooddata;
+          setFoodData({
+            name: fooddata.name,
+            foodType: fooddata.foodType,
+            category: fooddata.category,
+            Food_img: "",
+            description: fooddata.description,
+            price: fooddata.price,
+          });
+          setUpdatefood(true);
+        } catch (error) {
+          console.error("Error fetching task:", error);
+        }
+      }
+    };
+
+    fetchData();
+  }, [id]);
   const onchange = (e) => {
     const { name, value } = e.target;
     setFoodData({ ...FoodData, [name]: value });
@@ -45,34 +72,68 @@ function Add_food() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("name", FoodData.name);
-    formData.append("foodType", FoodData.foodType);
-    formData.append("category", FoodData.category);
-    formData.append("Food_img", image);
-    formData.append("description", FoodData.description);
-    formData.append("price", FoodData.price);
-    try {
-      const response = await axios.post(
-        `http://localhost:5000/Food/Add-Food`,
-        formData,
-        {
-          withCredentials: true,
-        },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
+    if (Updatefood === false) {
+      const formData = new FormData();
+      formData.append("name", FoodData.name);
+      formData.append("foodType", FoodData.foodType);
+      formData.append("category", FoodData.category);
+      formData.append("Food_img", image);
+      formData.append("description", FoodData.description);
+      formData.append("price", FoodData.price);
+      try {
+        const response = await axios.post(
+          `http://localhost:5000/Food/Add-Food`,
+          formData,
+          {
+            withCredentials: true,
           },
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        const res = response.data;
+        if (res.success) {
+          alert("food add successfully");
+        } else if (res.errors) {
+          seterrors(res.errors);
         }
-      );
-      const res = response.data;
-      if (res.success) {
-        alert("food add successfully");
-      } else if (res.errors) {
-        seterrors(res.errors);
+      } catch (error) {
+        console.log(error.message);
       }
-    } catch (error) {
-      console.log(error.message);
+    } else if (Updatefood === true) {
+      console.log(FoodData);
+      const formData = new FormData();
+      formData.append("name", FoodData.name);
+      formData.append("foodType", FoodData.foodType);
+      formData.append("category", FoodData.category);
+      formData.append("Food_img", image);
+      formData.append("description", FoodData.description);
+      formData.append("price", FoodData.price);
+      try {
+        const response = await axios.put(
+          `http://localhost:5000/Food/Edit-Food/${id}`,
+          formData,
+          {
+            withCredentials: true,
+          },
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        const res = response.data;
+        console.log(res);
+        if (res.success) {
+          navigate("/View_food");
+        } else if (res.errors) {
+          seterrors(res.errors);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
     }
   };
   return (
@@ -280,7 +341,7 @@ function Add_food() {
                     type="submit"
                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
-                    Add
+                    {Updatefood === false ? "Add" : "Update"}
                   </button>
                 </div>
               </form>
