@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   handelordercheckout,
   handleMyorder,
+  getAllSellerOrder,
 } = require("../controllers/Order.controller.js");
 const {
   CheckAuthenticationCookie,
@@ -15,6 +16,7 @@ router.get("/myorder", handleMyorder);
 router.get("/checkAuth", CheckAuthenticationCookie, (req, res) => {
   res.sendStatus(200);
 });
+router.get("/getAllSellerOrder", getAllSellerOrder);
 
 router.post("/payment", async (req, res) => {
   console.log(req.body.amount);
@@ -55,4 +57,5 @@ router.post("/paymentverify", async (req, res) => {
 router.get("/rozarpatKey", (req, res) => {
   res.json({ key: process.env.Razorpay_KEY_ID });
 });
+
 module.exports = router;

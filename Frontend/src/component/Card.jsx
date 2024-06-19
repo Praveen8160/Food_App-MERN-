@@ -19,6 +19,7 @@ function Card(props) {
         name: props.Food.name,
         Price: props.Food.price * qty,
         qty,
+        Seller: props.Food.seller,
       };
       setvalue([...value, newvalues]);
       localStorage.setItem("cart", JSON.stringify([...value, newvalues]));
@@ -82,7 +83,7 @@ function Card(props) {
           className="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
           onClick={handlecart}
         >
-          Go somewhere
+          Add to Cart
         </button>
       </div>
     </div>

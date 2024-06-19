@@ -42,7 +42,7 @@ function Cart() {
         }
       );
       const res = paymentresponse.data;
-      console.log("res1", res);
+      // console.log("res1", res);
       var options = {
         key, // Enter the Key ID generated from the Dashboard
         amount: res.order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise

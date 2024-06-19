@@ -44,7 +44,31 @@ const handleMyorder = async (req, res) => {
     return res.json({ error });
   }
 };
+const getAllSellerOrder = async (req, res) => {
+  try {
+    const pipeline = [
+      { $unwind: "$Orders" },
+      { $unwind: "$Orders" },
+      { $match: { "Orders.Seller": "664c6f1f99b4a6f4771633fd" } },
+      {
+        $group: {
+          _id: "$_id",
+          userId: { $first: "$userId" },
+          Orders: { $push: "$Orders" },
+        },
+      },
+    ];
+
+    const results = await Order.aggregate(pipeline);
+
+    return res.json({ results });
+  } catch (error) {
+    console.log(error.message);
+    return res.json({ error });
+  }
+};
 module.exports = {
   handelordercheckout,
   handleMyorder,
+  getAllSellerOrder
 };
