@@ -53,6 +53,7 @@ const UserLoginHandler = async (req, res) => {
   //   sameSite: "None",
   //   path: "/",
   // };
+
   res.cookie("token", authtoken, {
     httpOnly: true,
     secure: true,

@@ -57,6 +57,20 @@ const getAllSellerOrder = async (req, res) => {
           Orders: { $push: "$Orders" },
         },
       },
+      {
+        $lookup: {
+          from: "users", // Replace with the actual name of the users collection
+          localField: "userId",
+          foreignField: "_id",
+          as: "userDetails",
+        },
+      },
+      { $unwind: "$userDetails" },
+      {
+        $project: {
+          "userDetails.password": 0, // Exclude the password field
+        },
+      }, // Unwind to get the user details as an object instead of an array
     ];
 
     const results = await Order.aggregate(pipeline);
@@ -70,5 +84,5 @@ const getAllSellerOrder = async (req, res) => {
 module.exports = {
   handelordercheckout,
   handleMyorder,
-  getAllSellerOrder
+  getAllSellerOrder,
 };
